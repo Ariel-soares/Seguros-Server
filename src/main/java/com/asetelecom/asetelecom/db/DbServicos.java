@@ -17,4 +17,14 @@ public class DbServicos {
 		}
 	}
 	
+	public static ResultSet consultarPacotes(Connection conn) {
+		Statement stp;
+		try {
+			stp = conn.createStatement();
+			return stp.executeQuery("select * from pacotes");
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
 }

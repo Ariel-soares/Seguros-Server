@@ -10,7 +10,7 @@ import com.asetelecom.asetelecom.Seguros;
 @Component
 public class Rotina {
 	
-	@Scheduled(cron = "30 16 17 * * *")
+	@Scheduled(cron = "30 31 19 * * *")
 	public void cadastrarSeguros() throws InterruptedException, IOException{
 		Seguros.cadastrarSeguros();
 	}

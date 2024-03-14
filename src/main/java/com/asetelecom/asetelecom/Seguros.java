@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.asetelecom.asetelecom.db.DB;
 import com.asetelecom.asetelecom.db.DbException;
@@ -16,14 +15,16 @@ public class Seguros {
 
 		Connection conn = DB.getConnection();
 		ResultSet rs = DbServicos.consultarServicos(conn);
-		Statement st = null;
-		conn = DB.getConnection();
 
-		rs = DbServicos.consultarServicos(conn);
+		conn = DB.getConnection();
 
 		try {
 			while (rs.next()) {
 				System.out.println(rs.getString("nome_servico"));
+			}
+			ResultSet rsp = DbServicos.consultarPacotes(conn);
+			while (rsp.next()) {
+				System.out.println(rsp.getString("descricao"));
 			}
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -70,7 +71,7 @@ public class Seguros {
 		 * } else { System.out.println("Error in sending a GET request"); }
 		 */
 		DB.closeResultSet(rs);
+
 		DB.closeConnection();
-		DB.closeStatement(st);
 	}
 }
