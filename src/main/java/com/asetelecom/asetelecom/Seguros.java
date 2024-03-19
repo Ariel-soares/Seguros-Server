@@ -104,23 +104,6 @@ public class Seguros {
 		for(Segurado x : segurados) {
 			System.out.println(x);
 		}
-		
-		/*
-		for(Cliente x : clientes) {
-			for(Servico y : x.getServicos()) {
-				if(y.getNome().equals("CLUBE ASE+ - PET")) {
-					for(String z : servicos) {
-						if(y.getNome().equals(z)) {
-							System.out.println("Matching info" + y.getNome());
-						}
-					}
-					Segurado seg = new Segurado(x, y);
-					System.out.println(seg.toString());
-					segurados.add(seg);
-				}
-			}
-		}
-		*/
 
 		DB.closeResultSet(rs);
 		DB.closeConnection();
