@@ -12,11 +12,16 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.asetelecom.asetelecom.db.DB;
 import com.asetelecom.asetelecom.db.DbException;
 import com.asetelecom.asetelecom.db.DbServicos;
+import com.asetelecom.asetelecom.entities.Cliente;
 import com.asetelecom.asetelecom.entities.Resposta;
+import com.asetelecom.asetelecom.entities.Segurado;
+import com.asetelecom.asetelecom.entities.Servico;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Seguros {
@@ -29,12 +34,17 @@ public class Seguros {
 
 		conn = DB.getConnection();
 
+		List<String> servicos = new ArrayList<>();
+		List<String> pacotes = new ArrayList<>();
+		
 		try {
 			while (rs.next()) {
 				System.out.println(rs.getString("nome_servico"));
+				servicos.add(rs.getString("nome_servico"));
 			}
 			while (rsp.next()) {
 				System.out.println(rsp.getString("descricao"));
+				pacotes.add(rsp.getString("descricao"));
 			}
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -60,6 +70,8 @@ public class Seguros {
 		System.out.println(response.headers());
 
 		Resposta resposta;
+		
+		List<Cliente> clientes = new ArrayList<>();
 
 		if (response.statusCode() == 200) {
 			ObjectMapper mapper = new ObjectMapper();
@@ -68,13 +80,49 @@ public class Seguros {
 			System.out.println(resposta);
 
 			System.out.println(resposta.getClientes());
+			for(Cliente x : resposta.getClientes()) {
+				clientes.add(x);
+			}
 
 		} else {
 			System.out.println("Error in sending a GET request");
 		}
+		
+		List<Segurado> segurados = new ArrayList<>();
+		
+		for(Cliente x : clientes) {
+			for(Servico y : x.getServicos()) {
+				for(String z : servicos) {
+					if(y.getNome().equals(z) && x.getCpf_cnpj().length() == 11) {
+						System.out.println("Matching info: " + y.getNome());
+						segurados.add(new Segurado(x, y));
+					}
+					
+				}
+			}
+		}
+		for(Segurado x : segurados) {
+			System.out.println(x);
+		}
+		
+		/*
+		for(Cliente x : clientes) {
+			for(Servico y : x.getServicos()) {
+				if(y.getNome().equals("CLUBE ASE+ - PET")) {
+					for(String z : servicos) {
+						if(y.getNome().equals(z)) {
+							System.out.println("Matching info" + y.getNome());
+						}
+					}
+					Segurado seg = new Segurado(x, y);
+					System.out.println(seg.toString());
+					segurados.add(seg);
+				}
+			}
+		}
+		*/
 
 		DB.closeResultSet(rs);
-
 		DB.closeConnection();
 	}
 }

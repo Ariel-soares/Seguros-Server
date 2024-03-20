@@ -8,24 +8,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Servico {
 
-	
+	private String nome;
 	private Endereco_cadastral endereco_cadastral;
 	private List<Pacote> pacotes = new ArrayList<>();
 	
 	public Servico(){
 	}
 
-	public Servico(Endereco_cadastral endereco_fiscal, List<Pacote> pacotes) {
+	public Servico(String nome, Endereco_cadastral endereco_fiscal, List<Pacote> pacotes) {
+		this.nome = nome;
 		this.endereco_cadastral = endereco_fiscal;
 		this.pacotes = pacotes;
 	}
 
-	public Endereco_cadastral getEndereco_fiscal() {
+	public Endereco_cadastral getEndereco_cadastral() {
 		return endereco_cadastral;
 	}
 
-	public void setEndereco_fiscal(Endereco_cadastral endereco_fiscal) {
-		this.endereco_cadastral = endereco_fiscal;
+	public void setEndereco_fiscal(Endereco_cadastral endereco_cadastral) {
+		this.endereco_cadastral = endereco_cadastral;
 	}
 
 	public List<Pacote> getPacotes() {
@@ -35,10 +36,18 @@ public class Servico {
 	public void setPacotes(List<Pacote> pacotes) {
 		this.pacotes = pacotes;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	@Override
 	public String toString() {
-		return "Servico [endereco_cadastral=" + endereco_cadastral + ", pacotes=" + pacotes + "]";
+		return "Servico [nome=" + nome + ", endereco_cadastral=" + endereco_cadastral + ", pacotes=" + pacotes + "]";
 	}
-	
+
 }

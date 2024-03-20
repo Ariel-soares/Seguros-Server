@@ -10,16 +10,18 @@ public class Endereco_cadastral {
 	private String cep;
 	private String endereco;
 	private String numero;
+	private String bairro;
 	
 	public Endereco_cadastral() {}
 	
-	public Endereco_cadastral(String cidade, String uf, String cep, String endereco, String numero) {
+	public Endereco_cadastral(String cidade, String uf, String cep, String endereco, String numero, String bairro) {
 		super();
 		this.cidade = cidade;
 		this.uf = uf;
 		this.cep = cep;
 		this.endereco = endereco;
 		this.numero = numero;
+		this.bairro = bairro;
 	}
 
 	public String getCidade() {
@@ -52,11 +54,19 @@ public class Endereco_cadastral {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+	
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
 	@Override
 	public String toString() {
 		return "Endereco_cadastral [cidade=" + cidade + ", uf=" + uf + ", cep=" + cep + ", endereco=" + endereco
-				+ ", numero=" + numero + "]";
+				+ ", numero=" + numero + ", bairro=" + bairro + "]";
 	}
-	
+
 }
